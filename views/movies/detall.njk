@@ -1,0 +1,19 @@
+{% extends "../base.njk" %}
+{% block titol %}Pel·lícules | Informació{% endblock %}
+{% block contingut %}
+    <div class="text-center">
+        <h1>Informació de pel·lícula</h1>
+        <h4>Títol:</h4>
+        <p>{{ movie.title }}</p>
+        <h4>Any:</h4>
+        <p>{{ movie.year }}</p>
+        <h4>Director:</h4>
+        <p>{{ movie.director }}</p>
+        <h4>Duració:</h4>
+        <p>{{ movie.duration }} minuts</p>
+        <h4>Valoració:</h4>
+        <p>{{ movie.rate }}</p>
+        <h4>Gèneres:</h4>
+        <p>{{ movie.genre }}</p>
+    </div>
+{% endblock %}

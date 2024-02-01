@@ -1,0 +1,11 @@
+{% extends "base.njk" %}
+
+{% block titol %}Pel·lícules | Error{% endblock %}
+
+{% block contingut %}
+
+    <div class="alert alert-danger" role="alert">
+        {{ error }}
+    </div>
+
+{% endblock %}
