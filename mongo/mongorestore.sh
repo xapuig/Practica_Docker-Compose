@@ -1,0 +1,1 @@
+mongorestore -d movies --gzip --archive="/mongo_restore/dump_movies.gz"
