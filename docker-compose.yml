@@ -4,14 +4,26 @@ services:
         container_name: mongo_container
         restart: always
         environment:
-            MONGO_INITDB_DATABASE: movies
+            MONGO_INITDB_DATABASE: ${MONGODB_INITDB_DATABASE}
         ports:
-            - 27017:27017
+            - "27017:27017"
         volumes:
           - ./mongo/mongorestore.sh:/docker-entrypoint-initdb.d/mongorestore.sh
           - ./mongo:/mongo_restore
         networks:
-            - practica_final
+            - practica_net
+    backend:
+        build:
+            context: ./backend
+            dockerfile: Dockerfile
+        container_name: backend_container
+        command: npm start
+        ports:
+            - "4000:4000"
+        depends_on:
+            - mongodb
+        networks:
+            - practica_net
 networks:
-    practica_final:
+    practica_net:
         driver: bridge
