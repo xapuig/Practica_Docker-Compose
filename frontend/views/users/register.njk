@@ -1,0 +1,28 @@
+{% extends "base.njk" %}
+{% block titol %}Pel·lícules | Registre d' usuari{% endblock %}
+{% block contingut %}
+    <h1>Registrar usuari</h1>
+    <form action="/users/register" method="post">
+        <div class="form-group mb-3">
+            <label>Usuari:</label>
+            <input required type="text" class="form-control" name="username" placeholder="Nom de usuari..." value="{{ username }}">
+                {% if error %}
+                    <div class="text-danger">
+                        {{ error.message }}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="form-group mb-3">
+                <label>Contrasenya:</label>
+                <input required type="password" class="form-control" name="password" placeholder="Contrasenya...">
+                    {% if error_password %}
+                        <div class="text-danger">
+                            {{ error_password }}
+                        </div>
+                    {% endif %}
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    Enviar
+                </button>
+            </form>
+        {% endblock %}

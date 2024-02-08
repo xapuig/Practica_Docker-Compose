@@ -24,6 +24,18 @@ services:
             - mongodb
         networks:
             - practica_net
+    frontend:
+        build:
+            context: ./frontend
+            dockerfile: Dockerfile
+        container_name: frontend_container
+        command: npm start
+        ports:
+            - "3000:3000"
+        depends_on:
+            - backend
+        networks:
+            - practica_net
 networks:
     practica_net:
         driver: bridge

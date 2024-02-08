@@ -1,0 +1,56 @@
+{% extends "../base.njk" %}
+
+{% block titol %}Pel·lícules | Editar{% endblock %}
+
+{% block contingut %}
+
+ <h1>Editar pel·lícula</h1>
+
+ <form action="/movies/actualitzar/{{movie._id}}" method="post">
+    <div class="form-group mb-3">
+        <label>Títol:</label>   
+        <input type="text" class="form-control" name="title" placeholder="Títol de la pel·lícula..." value="{{ movie.title}}">
+        {%if errors.title %} <div class="text-danger"> {{errors.title.message}}  </div> {% endif %}
+    </div>
+    <div class="form-group mb-3">
+        <label>Any:</label>
+        <input type="number" class="form-control" name="year"
+                placeholder="Any de publicació..." value="{{ movie.year }}">
+                 {%if errors.year %} <div class="text-danger"> {{errors.year.message}}  </div> {% endif %}
+    </div>
+    <div class="form-group mb-3">
+        <label>Director:</label>
+        <input type="text" class="form-control" name="director"
+                placeholder="Nom del director..." value="{{ movie.director }}">
+    </div>
+    <div class="form-group mb-3">
+        <label>Duració:</label>
+        <input type="number" class="form-control" name="duration"
+                placeholder="Duració en minuts..." value="{{ movie.duration }}">
+        {%if errors.duration %} <div class="text-danger"> {{errors.duration.message}}  </div> {% endif %}
+    </div>
+    <div class="form-group mb-3">
+        <label>Valoració:</label>   
+        <input type="number" step=".01" class="form-control" name="rate" placeholder="Valoració de la pel·lícula..." value="{{ movie.rate}}">
+        {%if errors.rate %} <div class="text-danger"> {{errors.rate.message}}  </div> {% endif %}
+    </div>
+    <div class="form-group mb-3">
+        <label>Gènere:</label>
+        <select class="form-control" name="genre" multiple>
+            <option value="Sci-Fi" {% if 'Sci-Fi' in movie.genre %} selected {% endif %} >Sci-Fi</option>
+            <option value="Crime" {% if 'Crime' in movie.genre %} selected {% endif %} >Crime</option>
+            <option value="Drama" {% if 'Drama' in movie.genre %} selected {% endif %} >Drama</option>
+            <option value="Action" {% if 'Action' in movie.genre %} selected {% endif %} >Action</option>
+            <option value="Adventure" {% if 'Adventure' in movie.genre %} selected {% endif %} >Adventure</option>
+            <option value="Romance" {% if 'Romance' in movie.genre %} selected {% endif %} >Romance</option>
+            <option value="Animation" {% if 'Animation' in movie.genre %} selected {% endif %} >Animation</option>
+            <option value="Biography" {% if 'Biography' in movie.genre %} selected {% endif %} >Biography</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        Enviar
+    </button>
+ </form>
+
+{% endblock %}
