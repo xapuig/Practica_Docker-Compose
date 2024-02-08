@@ -48,6 +48,16 @@ services:
             - mongodb
         networks:
             - practica_net
+    nginx-loadbalancer:
+        image: nginx:latest
+        container_name: nginx-loadbalancer_container
+        ports: 
+            - "80:80"
+        volumes:
+            - ./loadbalancer/nginx.conf:/etc/nginx/nginx.conf
+        command: nginx -g "daemon off;"
+        networks:
+            - practica_net
 networks:
     practica_net:
         driver: bridge
