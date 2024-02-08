@@ -4,7 +4,7 @@ services:
         container_name: mongo_container
         restart: always
         environment:
-            MONGO_INITDB_DATABASE: ${MONGODB_INITDB_DATABASE}
+            - MONGO_INITDB_DATABASE=${MONGODB_INITDB_DATABASE}
         ports:
             - "27017:27017"
         volumes:
@@ -34,6 +34,18 @@ services:
             - "3000:3000"
         depends_on:
             - backend
+        networks:
+            - practica_net
+    mongo-express:
+        image: mongo-express
+        container_name: adminMongo_container
+        ports:
+            - "8081:8081"
+        environment:
+            - ME_CONFIG_MONGODB_SERVER=${DB_HOST}
+            - ME_CONFIG_MONGODB_URL=${ME_CONFIG_MONGODB_URL}
+        depends_on:
+            - mongodb
         networks:
             - practica_net
 networks:
