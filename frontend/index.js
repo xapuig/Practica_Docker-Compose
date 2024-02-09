@@ -3,6 +3,14 @@ const mongoose = require('mongoose');
 const express = require('express');
 const nunjucks = require('nunjucks');
 const cookieParser = require('cookie-parser')
+const client = require('prom-client');
+const collectDefaultMetrics = client.collectDefaultMetrics;
+collectDefaultMetrics({ timeout: 5000 });
+
+const counterHomeEndpoint = new client.Counter({
+    name: 'counterHomeEndpoint',
+    help: 'The total number of processed requests'
+});
 require('dotenv').config();
 
 
@@ -38,8 +46,14 @@ app.use('/api/users', usersRouterAPI)
 
 
 app.get('/', function (req, res) {
+    counterHomeEndpoint.inc();
     res.render('index');
 });
+
+app.get('/metrics', (req, res) => {
+    res.setHeader('Content-Type',client.register.contentType)
+    client.register.metrics().then(data => res.send(data));
+ });
 
 
 

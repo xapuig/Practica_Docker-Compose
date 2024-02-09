@@ -58,6 +58,33 @@ services:
         command: nginx -g "daemon off;"
         networks:
             - practica_net
+    prometheus:
+        image: prom/prometheus:v2.20.1
+        container_name: prometheus_practica
+        volumes:
+            - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+        command: --config.file=/etc/prometheus/prometheus.yml
+        ports:
+            - "9090:9090"
+        networks:
+            - practica_net
+    grafana:
+        image: grafana/grafana:7.1.5
+        container_name: grafana_practica
+        volumes:
+            - ./myGrafanaVol:/var/lib/grafana
+            - ./grafana/datasources.yml:/etc/grafana/provisioning/datasources/datasources.yml
+        environment:
+            - GF_AUTH_BASIC_ENABLED=${GF_AUTH_BASIC_ENABLED}
+            - GF_AUTH_ANONYMOUS_ENABLED=${GF_AUTH_ANONYMOUS_ENABLED}
+            - GF_AUTH_ANONYMOUS_ORG_ROLE=${GF_AUTH_ANONYMOUS_ORG_ROLE}
+            - GF_INSTALL_PLUGINS=${GF_INSTALL_PLUGINS}
+        depends_on:
+            - prometheus
+        ports:
+            - "3500:3000"
+        networks:
+            - practica_net
 networks:
     practica_net:
         driver: bridge
